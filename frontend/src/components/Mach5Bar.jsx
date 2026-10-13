@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { Truck, MapPin, Flag, Cone, PhoneCall, Bookmark, ChevronDown, Gauge } from "lucide-react";
+import { Navigation, Fuel, Gauge, ParkingCircle, PhoneCall, ChevronDown } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 // Tablero MACH5: barra flotante compacta con esquinas redondeadas; cada boton en su propio marco.
 const BUTTONS = [
-  { key: "A", label: "Auxilio", color: "#FF2A3B", Icon: Truck, testid: "mach5-auxilio", modal: "auxilio" },
-  { key: "B", label: "Combustible", color: "#0088FF", Icon: MapPin, testid: "mach5-map", modal: "map" },
-  { key: "C", label: "Sitios", color: "#10B981", Icon: Flag, testid: "mach5-sitios", modal: "sitios" },
-  { key: "D", label: "Desvíos", color: "#FF8C00", Icon: Cone, testid: "mach5-desvios", modal: "desvios" },
-  { key: "E", label: "Emergencia", color: "#DC2626", Icon: PhoneCall, testid: "mach5-emergencia", modal: "emergencia" },
-  { key: "G", label: "Garaje", color: "#FFD60A", Icon: Bookmark, testid: "mach5-garaje", modal: "garaje" },
+  { key: "A", label: "GPS", color: "#2563EB", Icon: Navigation, testid: "mach5-gps", modal: "map", props: { initial: "gps" } },
+  { key: "B", label: "Combustible y GNC", color: "#0088FF", Icon: Fuel, testid: "mach5-map", modal: "map", props: { initial: "combustible" } },
+  { key: "C", label: "Radares y Cámaras", color: "#FF2A3B", Icon: Gauge, testid: "mach5-radares", modal: "map", props: { initial: "radares" } },
+  { key: "D", label: "Estacionamientos", color: "#10B981", Icon: ParkingCircle, testid: "mach5-estacionamientos", modal: "map", props: { initial: "parking" } },
+  { key: "E", label: "Emergencias", color: "#DC2626", Icon: PhoneCall, testid: "mach5-emergencia", modal: "emergencia", props: {} },
 ];
 export function Mach5Bar() {
   const { openModal } = useApp();
@@ -35,19 +34,19 @@ export function Mach5Bar() {
           <ChevronDown size={16} />
         </button>
       </div>
-      <div className="grid grid-cols-6 gap-1.5 px-2 pb-2">
-        {BUTTONS.map(({ key, label, color, Icon, testid, modal }) => (
+      <div className="grid grid-cols-5 gap-1.5 px-2 pb-2">
+        {BUTTONS.map(({ key, label, color, Icon, testid, modal, props }) => (
           <button
             key={key}
             data-testid={testid}
-            onClick={() => openModal(modal, modal === "map" ? { initial: "combustible" } : {})}
+            onClick={() => openModal(modal, props)}
             className="flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-xl border border-[#2A2F3D] bg-white/[0.02] hover:bg-white/[0.06] hover:-translate-y-0.5 transition-all"
           >
             <span
               className="w-8 h-8 rounded-full flex items-center justify-center shadow-md shadow-black/30"
               style={{ background: color }}
             >
-              <Icon size={16} style={{ color: key === "G" ? "#0B0C10" : "#FFFFFF" }} />
+              <Icon size={16} style={{ color: "#FFFFFF" }} />
             </span>
             <span className="text-[9px] font-cond font-900" style={{ color }}>{key}</span>
             <span className="text-[8px] font-semibold uppercase tracking-wide text-white/70 leading-none text-center">{label}</span>
