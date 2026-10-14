@@ -61,7 +61,7 @@ export function Footer() {
           </p>
           <p className="mt-3">Firma <span className="text-[#FFD60A] font-semibold">MACH5</span> - {new Date().getFullYear()}</p>
           <p className="mt-2" data-testid="footer-credits">
-            Hecho en equipo: <span className="text-white/60 font-semibold">Natasha</span> con la ayuda de{" "}
+            Hecho en equipo: <span className="text-white/60 font-semibold">Natsh</span> con la ayuda de{" "}
             <span className="text-white/60 font-semibold">GitHub Copilot</span> y <span className="text-white/60 font-semibold">Gemini</span>.
           </p>
         </div>
