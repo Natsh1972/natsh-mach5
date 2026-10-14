@@ -14,21 +14,21 @@ import { SearchResults } from "@/components/SearchResults";
 import { AgendaFierro } from "@/components/AgendaFierro";
 import { Mach5Bar } from "@/components/Mach5Bar";
 import { ModalHost } from "@/components/modals/Modal";
-import { getCategory } from "@/data/categories";
+import { getCategory, TRAMITES_SLUGS } from "@/data/categories";
 import { CategoryIcon } from "@/components/CategoryIcon";
 
-// Trámites y Gestoría: Papeles/VTV y Asesoría Legal (fuera de Auto/Moto, arriba de Agenda Fierro).
-const TRAMITES = ["papeles_vtv", "asesoria_legal"];
+// Trámites y Gestoría: Papeles/VTV, Asesoría Legal y Gestoría/Aseguradoras (fuera de Auto/Moto, arriba de Agenda Fierro).
+const TRAMITES = TRAMITES_SLUGS;
 
 function TramitesSection() {
   const { push } = useApp();
   return (
     <section className="max-w-6xl mx-auto px-4 pt-16 pb-0" data-testid="tramites-section">
-      <h2 className="font-cond font-900 uppercase text-4xl sm:text-5xl text-white tracking-wide">
+      <h2 className="font-cond font-900 uppercase text-xl sm:text-2xl text-white tracking-wide">
         Trámites <span className="text-[#FFD60A]">y Gestoría</span>
       </h2>
       <p className="text-white/50 mt-1 text-base">Papeles, VTV y asesoría legal para tu auto o moto.</p>
-      <div className="grid grid-cols-2 gap-4 mt-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-5">
         {TRAMITES.map((slug) => {
           const c = getCategory(slug);
           return (
@@ -36,10 +36,8 @@ function TramitesSection() {
               key={slug}
               data-testid={`tramite-${slug}`}
               onClick={() => push({ screen: "list", category: slug })}
-              className="group rounded-xl border p-5 text-left hover:-translate-y-1 transition-all"
-              style={{ background: "linear-gradient(180deg, #1C1C1C 0%, #0E0E0E 100%)", borderColor: "#2A2A2A" }}
-              onMouseEnter={(e) => (e.currentTarget.style.borderColor = c.color)}
-              onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#2A2A2A")}
+              className="group rounded-xl border-2 border-white p-5 text-left hover:-translate-y-1 transition-all"
+              style={{ background: "linear-gradient(180deg, #1C1C1C 0%, #0E0E0E 100%)" }}
             >
               <div className="w-11 h-11 rounded-lg flex items-center justify-center mb-3" style={{ background: `${c.color}1A` }}>
                 <CategoryIcon slug={slug} className="w-6 h-6" />

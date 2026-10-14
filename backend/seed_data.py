@@ -29,7 +29,7 @@ SEED_BUSINESSES = [
         "status": "approved",
     },
     {
-        "name": "Chapa y Pintura Ramos", "category": "chapa_pintura", "vehicles": ["auto", "moto"],
+        "name": "Chapa y Pintura Ramos", "category": "chapa_soldadura", "vehicles": ["auto", "moto"],
         "zone": "Tolosa", "whatsapp": "5492211111004",
         "description": "Chapa, pintura horno y pulido profesional.",
         "services": ["Pintura horno", "Chapa", "Pulido", "Detallado"],
@@ -64,7 +64,7 @@ SEED_BUSINESSES = [
         "status": "approved",
     },
     {
-        "name": "Optica y Alineacion Faro", "category": "optica", "vehicles": ["auto"],
+        "name": "Optica y Alineacion Faro", "category": "optica", "vehicles": ["auto", "moto"],
         "zone": "Casco Urbano", "whatsapp": "5492211111008",
         "description": "Pulido de opticas y regulacion de luces.",
         "services": ["Pulido optica", "Regulacion", "Xenon"],
@@ -72,7 +72,7 @@ SEED_BUSINESSES = [
         "status": "approved",
     },
     {
-        "name": "Soldaduras Especiales GT", "category": "soldadura", "vehicles": ["auto", "moto"],
+        "name": "Soldaduras Especiales GT", "category": "chapa_soldadura", "vehicles": ["auto", "moto"],
         "zone": "Ensenada", "whatsapp": "5492211111009",
         "description": "Soldadura de aluminio, TIG y estructuras.",
         "services": ["TIG", "Aluminio", "Estructuras"],
