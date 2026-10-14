@@ -14,9 +14,10 @@ import uuid
 from datetime import datetime, timezone
 
 CATEGORIAS = {
-    "mecanica", "chapa_pintura", "neumaticos", "electrica", "optica", "soldadura",
-    "grua", "lavadero", "personalizacion", "gnc", "importadores", "papeles_vtv",
-    "asesoria_legal", "cascos", "seguridad_airbag",
+    "mecanica", "gnc", "scanner", "neumaticos", "electrica", "alineacion", "optica",
+    "chapa_soldadura", "pintura", "repuestos", "lubricentros", "polarizados", "tapiceria",
+    "seguridad_airbag", "accesorios", "personalizacion", "aire_acondicionado", "cascos",
+    "importadores", "lavadero", "grua", "papeles_vtv", "asesoria_legal", "gestoria_aseguradoras",
 }
 COLUMNAS = ["nombre", "categoria", "vehiculos", "zona", "whatsapp", "descripcion", "servicios"]
 

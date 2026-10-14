@@ -1,17 +1,27 @@
 import React from "react";
 import {
-  Wrench, PaintBucket, CircleDot, Zap, Lightbulb, Flame, Truck, Droplets,
+  Wrench, PaintBucket, CircleDot, Zap, Lightbulb, Truck, Droplets,
   Sparkles, Fuel, PackageSearch, FileCheck2, Scale, HardHat, ShieldCheck,
+  ScanLine, Disc3, Hammer, Cog, Layers, Armchair, ShoppingBag, Snowflake, Umbrella, Droplet,
 } from "lucide-react";
 import { getCategory } from "@/data/categories";
 
 const MAP = {
   mecanica: Wrench,
-  chapa_pintura: PaintBucket,
+  scanner: ScanLine,
+  alineacion: Disc3,
+  chapa_soldadura: Hammer,
+  pintura: PaintBucket,
+  repuestos: Cog,
+  lubricentros: Droplet,
+  polarizados: Layers,
+  tapiceria: Armchair,
+  accesorios: ShoppingBag,
+  aire_acondicionado: Snowflake,
+  gestoria_aseguradoras: Umbrella,
   neumaticos: CircleDot,
   electrica: Zap,
   optica: Lightbulb,
-  soldadura: Flame,
   grua: Truck,
   lavadero: Droplets,
   personalizacion: Sparkles,

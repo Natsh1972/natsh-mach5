@@ -14,11 +14,11 @@ import { SearchResults } from "@/components/SearchResults";
 import { AgendaFierro } from "@/components/AgendaFierro";
 import { Mach5Bar } from "@/components/Mach5Bar";
 import { ModalHost } from "@/components/modals/Modal";
-import { getCategory } from "@/data/categories";
+import { getCategory, TRAMITES_SLUGS } from "@/data/categories";
 import { CategoryIcon } from "@/components/CategoryIcon";
 
-// Trámites y Gestoría: Papeles/VTV y Asesoría Legal (fuera de Auto/Moto, arriba de Agenda Fierro).
-const TRAMITES = ["papeles_vtv", "asesoria_legal"];
+// Trámites y Gestoría: Papeles/VTV, Asesoría Legal y Gestoría/Aseguradoras (fuera de Auto/Moto, arriba de Agenda Fierro).
+const TRAMITES = TRAMITES_SLUGS;
 
 function TramitesSection() {
   const { push } = useApp();
@@ -28,7 +28,7 @@ function TramitesSection() {
         Trámites <span className="text-[#FFD60A]">y Gestoría</span>
       </h2>
       <p className="text-white/50 mt-1 text-base">Papeles, VTV y asesoría legal para tu auto o moto.</p>
-      <div className="grid grid-cols-2 gap-4 mt-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-5">
         {TRAMITES.map((slug) => {
           const c = getCategory(slug);
           return (
