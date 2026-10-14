@@ -14,7 +14,7 @@ export function VehicleSelect() {
   };
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12" data-testid="vehicle-select">
+    <section className="max-w-6xl mx-auto px-4 pt-4 pb-8" data-testid="vehicle-select">
       <img src="/marca-automotos.png" alt="AUTOMOTOS L.P." className="h-14 sm:h-20 w-auto mx-auto mb-4 select-none" draggable={false} data-testid="vehicle-select-brand" />
       <h2 className="font-cond font-900 uppercase text-4xl sm:text-5xl text-white text-center tracking-wide">
         Toma tu posición de largada
@@ -23,11 +23,11 @@ export function VehicleSelect() {
         Elegí tu vehículo y encontrá el servicio exacto que buscás.
       </p>
 
-      <div className="grid sm:grid-cols-2 gap-5 mt-8">
+      <div className="grid sm:grid-cols-2 gap-5 mt-5">
         <button
           data-testid="select-auto"
           onClick={() => pick("auto")}
-          className="group relative overflow-hidden rounded-2xl bg-[#12141C] border border-[#1F2330] p-6 flex items-center gap-4 text-left hover:border-[#FFD60A]/60 transition-all hover:-translate-y-1"
+          className="group relative overflow-hidden rounded-2xl bg-[#12141C] border-2 border-[#FFD60A] px-6 py-2 flex items-center gap-4 text-left hover:-translate-y-1 transition-all"
         >
           <img
             src="/btn-autos.png"
@@ -36,14 +36,14 @@ export function VehicleSelect() {
           />
           <div>
             <h3 className="font-cond font-900 text-4xl uppercase text-white leading-none">Autos</h3>
-            <p className="text-white/60 text-sm mt-2">Hacé clic y entrá a la guía de servicios e info actual que buscás.</p>
+            <p className="text-white/60 text-sm mt-2 leading-snug">HACÉ CLICK para entrar en<br />la GUIA de SERVICIOS e INFO. actual</p>
           </div>
         </button>
 
         <button
           data-testid="select-moto"
           onClick={() => pick("moto")}
-          className="group relative overflow-hidden rounded-2xl bg-[#12141C] border border-[#1F2330] p-6 flex items-center gap-4 text-left hover:border-[#FFD60A]/60 transition-all hover:-translate-y-1"
+          className="group relative overflow-hidden rounded-2xl bg-[#12141C] border-2 border-[#FFD60A] px-6 py-2 flex items-center gap-4 text-left hover:-translate-y-1 transition-all"
         >
           <img
             src="/btn-motos.png"
@@ -52,7 +52,7 @@ export function VehicleSelect() {
           />
           <div>
             <h3 className="font-cond font-900 text-4xl uppercase text-white leading-none">Motos</h3>
-            <p className="text-white/60 text-sm mt-2">Hacé clic y entrá a la guía de servicios e info actual que buscás.</p>
+            <p className="text-white/60 text-sm mt-2 leading-snug">HACÉ CLICK para entrar en<br />la GUIA de SERVICIOS e INFO. actual</p>
           </div>
         </button>
       </div>
