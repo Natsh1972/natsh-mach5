@@ -36,10 +36,8 @@ function TramitesSection() {
               key={slug}
               data-testid={`tramite-${slug}`}
               onClick={() => push({ screen: "list", category: slug })}
-              className="group rounded-xl border p-5 text-left hover:-translate-y-1 transition-all"
-              style={{ background: "linear-gradient(180deg, #1C1C1C 0%, #0E0E0E 100%)", borderColor: "#2A2A2A" }}
-              onMouseEnter={(e) => (e.currentTarget.style.borderColor = c.color)}
-              onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#2A2A2A")}
+              className="group rounded-xl border-2 border-white p-5 text-left hover:-translate-y-1 transition-all"
+              style={{ background: "linear-gradient(180deg, #1C1C1C 0%, #0E0E0E 100%)" }}
             >
               <div className="w-11 h-11 rounded-lg flex items-center justify-center mb-3" style={{ background: `${c.color}1A` }}>
                 <CategoryIcon slug={slug} className="w-6 h-6" />
