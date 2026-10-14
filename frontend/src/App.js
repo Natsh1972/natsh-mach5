@@ -20,14 +20,34 @@ import { CategoryIcon } from "@/components/CategoryIcon";
 // Trámites y Gestoría: Papeles/VTV, Asesoría Legal y Gestoría/Aseguradoras (fuera de Auto/Moto, arriba de Agenda Fierro).
 const TRAMITES = TRAMITES_SLUGS;
 
+function SumaBanner() {
+  const { openModal } = useApp();
+  return (
+    <section className="max-w-6xl mx-auto px-4 pt-6" data-testid="suma-banner">
+      <button
+        data-testid="suma-banner-btn"
+        onClick={() => openModal("sumaTaller")}
+        className="w-full rounded-2xl border-2 border-[#FFD60A] bg-[#12141C] hover:bg-[#1A1D28] transition px-5 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-left"
+      >
+        <span className="font-cond font-900 uppercase text-xl sm:text-2xl text-white tracking-wide">
+          ¿Tenes un taller o negocio? <span className="text-[#FFD60A]">Sumate gratis</span>
+        </span>
+        <span className="inline-flex items-center gap-2 bg-[#FFD60A] text-[#0B0C10] font-bold rounded-full px-5 py-2 text-sm">
+          SUMA TU TALLER
+        </span>
+      </button>
+    </section>
+  );
+}
+
 function TramitesSection() {
   const { push } = useApp();
   return (
     <section className="max-w-6xl mx-auto px-4 pt-16 pb-0" data-testid="tramites-section">
       <h2 className="font-cond font-900 uppercase text-xl sm:text-2xl text-white tracking-wide">
-        Trámites <span className="text-[#FFD60A]">y Gestoría</span>
+        TRAMITES Y GESTORIA
       </h2>
-      <p className="text-white/50 mt-1 text-base">Papeles, VTV y asesoría legal para tu auto o moto.</p>
+      <p className="text-[#FFD60A] mt-1 text-base">Papeles, VTV y asesoria legal para tu auto o moto.</p>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-5">
         {TRAMITES.map((slug) => {
           const c = getCategory(slug);
@@ -68,6 +88,7 @@ function Screen() {
         <>
           <Hero />
           <VehicleSelect />
+          <SumaBanner />
           <TramitesSection />
           <AgendaFierro />
         </>
