@@ -594,7 +594,6 @@ async def seed_admin():
 async def startup():
     await db.users.create_index("email", unique=True)
     await db.login_attempts.create_index("identifier")
-    await seed_collection("businesses", seed_data.SEED_BUSINESSES)
     await seed_collection("radars", seed_data.SEED_RADARS)
     await seed_collection("fuel_points", seed_data.SEED_FUEL, with_created=False)
     await seed_collection("events", seed_data.SEED_EVENTS)
