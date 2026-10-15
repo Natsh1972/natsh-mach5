@@ -11,6 +11,7 @@ export const CATEGORIES = [
   { slug: "optica", label: "Ópticas, Luces y Sonido", vehicles: "both", color: "#A78BFA" },
   { slug: "chapa_soldadura", label: "Chapa, Sacabollos y Soldadura", vehicles: "both", color: "#FB7185" },
   { slug: "pintura", label: "Pintura", vehicles: "both", color: "#F97316" },
+  { slug: "escapes_frenos", label: "Escapes y Frenos", vehicles: "both", color: "#FB923C" },
   { slug: "repuestos", label: "Repuestos Nuevos/Usados", vehicles: "both", color: "#F59E0B" },
   { slug: "lubricentros", label: "Lubricentros", vehicles: "both", color: "#EAB308" },
   { slug: "polarizados", label: "Polarizados", vehicles: "both", color: "#94A3B8" },

@@ -44,10 +44,10 @@ function TramitesSection() {
   const { push } = useApp();
   return (
     <section className="max-w-6xl mx-auto px-4 pt-16 pb-0" data-testid="tramites-section">
-      <h2 className="font-cond font-900 uppercase text-xl sm:text-2xl text-white tracking-wide">
+      <h2 className="font-cond font-900 uppercase text-3xl sm:text-4xl text-white tracking-wide">
         TRAMITES Y GESTORIA
       </h2>
-      <p className="text-[#FFD60A] mt-1 text-base">Papeles, VTV y asesoria legal para tu auto o moto.</p>
+      <p className="text-[#FFD60A] mt-1 text-sm max-w-[260px] leading-snug">Papeles, VTV y asesoria legal para tu auto o moto.</p>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-5">
         {TRAMITES.map((slug) => {
           const c = getCategory(slug);

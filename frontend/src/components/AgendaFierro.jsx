@@ -17,11 +17,9 @@ export function AgendaFierro() {
   useEffect(() => { api.getEvents().then(setEvents).catch(() => {}); }, []);
   return (
     <section id="agenda" className="max-w-6xl mx-auto px-4 py-10" data-testid="agenda-fierro">
-      <div className="flex items-center gap-3 mb-2">
+      <div className="flex items-start gap-3 mb-2">
         <img src="/alp-emblem.png" alt="A.L.P." className="h-12 sm:h-14 w-auto select-none" />
-        <h2 className="font-cond font-900 uppercase text-xl sm:text-2xl text-white tracking-wide">AGENDA AUTOMOTOS L.P.</h2>
-      </div>
-      <p className="text-[#FFD60A] text-base">Expos, carreras y encuentros en La Plata y alrededores.</p>
+        <div><h2 className="font-cond font-900 uppercase text-3xl sm:text-4xl text-white tracking-wide">AGENDA AUTOMOTOS L.P.</h2><p className="text-[#FFD60A] text-sm mt-1 max-w-[260px] leading-snug">Expo, carreras y encuentros en La Plata y alrededores.</p></div></div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mt-6">
         {events.map((e) => {
           const t = TAG[e.type] || TAG.encuentro;
