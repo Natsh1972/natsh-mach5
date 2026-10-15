@@ -5,7 +5,7 @@ import { useApp } from "@/context/AppContext";
 const BUTTONS = [
   { key: "A", label: "GPS", short: "GPS", color: "#FFD60A", iconColor: "#0B0C10", testid: "mach5-gps", modal: "map", props: { initial: "gps" } },
   { key: "B", label: "Combustible y GNC", short: "Nafta y GNC", color: "#0088FF", testid: "mach5-map", modal: "map", props: { initial: "combustible" } },
-  { key: "C", label: "Radares y Cámaras", color: "#FF2A3B", short: "Radares", testid: "mach5-radares", modal: "map", props: { initial: "radares" } },
+  { key: "C", label: "Radares y Cámaras", color: "#22C55E", short: "Radares", testid: "mach5-radares", modal: "map", props: { initial: "radares" } },
   { key: "D", label: "Estacionamientos", short: "Estac.", color: "#FFFFFF", iconColor: "#0B0C10", letter: "E", testid: "mach5-estacionamientos", modal: "map", props: { initial: "parking" } },
   { key: "E", label: "Emergencias", short: "SOS", color: "#DC2626", testid: "mach5-emergencia", modal: "emergencia", props: {} },
 ];
