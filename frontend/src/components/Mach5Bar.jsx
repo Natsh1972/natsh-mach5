@@ -3,11 +3,11 @@ import { Navigation, Fuel, Gauge, PhoneCall, ChevronDown } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 // Tablero MACH5: barra flotante compacta con esquinas redondeadas; cada boton en su propio marco.
 const BUTTONS = [
-  { key: "A", label: "GPS", color: "#FFD60A", iconColor: "#0B0C10", Icon: Navigation, testid: "mach5-gps", modal: "map", props: { initial: "gps" } },
-  { key: "B", label: "Combustible y GNC", color: "#0088FF", Icon: Fuel, testid: "mach5-map", modal: "map", props: { initial: "combustible" } },
-  { key: "C", label: "Radares y Cámaras", color: "#FF2A3B", Icon: Gauge, testid: "mach5-radares", modal: "map", props: { initial: "radares" } },
-  { key: "D", label: "Estacionamientos", color: "#FFFFFF", iconColor: "#0B0C10", letter: "E", testid: "mach5-estacionamientos", modal: "map", props: { initial: "parking" } },
-  { key: "E", label: "Emergencias", color: "#DC2626", Icon: PhoneCall, testid: "mach5-emergencia", modal: "emergencia", props: {} },
+  { key: "A", label: "GPS", short: "GPS", color: "#FFD60A", iconColor: "#0B0C10", Icon: Navigation, testid: "mach5-gps", modal: "map", props: { initial: "gps" } },
+  { key: "B", label: "Combustible y GNC", short: "Nafta y GNC", color: "#0088FF", Icon: Fuel, testid: "mach5-map", modal: "map", props: { initial: "combustible" } },
+  { key: "C", label: "Radares y Cámaras", color: "#FF2A3B", Icon: Gauge, short: "Radares", testid: "mach5-radares", modal: "map", props: { initial: "radares" } },
+  { key: "D", label: "Estacionamientos", short: "Estac.", color: "#FFFFFF", iconColor: "#0B0C10", letter: "E", testid: "mach5-estacionamientos", modal: "map", props: { initial: "parking" } },
+  { key: "E", label: "Emergencias", short: "SOS", color: "#DC2626", Icon: PhoneCall, testid: "mach5-emergencia", modal: "emergencia", props: {} },
 ];
 export function Mach5Bar() {
   const { openModal } = useApp();
@@ -35,12 +35,12 @@ export function Mach5Bar() {
         </button>
       </div>
       <div className="grid grid-cols-5 gap-1.5 px-2 pb-2">
-        {BUTTONS.map(({ key, label, color, iconColor, Icon, letter, testid, modal, props }) => (
+        {BUTTONS.map(({ key, label, short, color, iconColor, Icon, letter, testid, modal, props }) => (
           <button
             key={key}
             data-testid={testid}
             onClick={() => openModal(modal, props)}
-            className="flex flex-col items-center justify-center gap-1 py-1.5 rounded-xl border-2 border-[#FF2A3B] bg-white/[0.02] hover:bg-white/[0.06] hover:-translate-y-0.5 transition-all"
+            className="min-w-0 flex flex-col items-center justify-center gap-1 py-1.5 rounded-xl border-2 border-[#FF2A3B] bg-white/[0.02] hover:bg-white/[0.06] hover:-translate-y-0.5 transition-all"
           >
             <span
               className="w-8 h-8 rounded-full flex items-center justify-center shadow-md shadow-black/30"
@@ -50,7 +50,7 @@ export function Mach5Bar() {
                 ? <span className="font-cond font-900 text-lg leading-none" style={{ color: iconColor }}>{letter}</span>
                 : <Icon size={16} style={{ color: iconColor || "#FFFFFF" }} />}
             </span>
-            <span className="text-[9px] font-semibold uppercase tracking-wide text-white/80 leading-tight text-center">{label}</span>
+            <span className="text-[9px] font-semibold uppercase tracking-wide text-white/80 leading-tight text-center max-w-full px-0.5 overflow-hidden"><span className="sm:hidden">{short || label}</span><span className="hidden sm:inline">{label}</span></span>
           </button>
         ))}
       </div>
