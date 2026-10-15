@@ -20,7 +20,7 @@ export function AgendaFierro() {
       <div className="flex items-start gap-3 mb-2">
         <img src="/alp-emblem.png" alt="A.L.P." className="h-12 sm:h-14 w-auto select-none" />
         <div><h2 className="font-cond font-900 uppercase text-3xl sm:text-4xl text-white tracking-wide">AGENDA AUTOMOTOS L.P.</h2><p className="text-[#FFD60A] text-sm mt-1 max-w-[260px] leading-snug">Expo, carreras y encuentros en La Plata y alrededores.</p></div></div>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 mt-6">
         {events.map((e) => {
           const t = TAG[e.type] || TAG.encuentro;
           return (
