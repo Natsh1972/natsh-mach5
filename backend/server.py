@@ -590,8 +590,19 @@ async def seed_admin():
         logger.info("Admin password actualizada")
 
 
+async def remove_demo_businesses():
+    """Borra una sola vez los negocios de ejemplo (por nombre exacto) para que la guia sea honesta."""
+    if await db.meta.find_one({"key": "demo_businesses_removed"}):
+        return
+    names = [b["name"] for b in seed_data.SEED_BUSINESSES]
+    res = await db.businesses.delete_many({"name": {"$in": names}})
+    await db.meta.insert_one({"key": "demo_businesses_removed", "at": now_iso()})
+    logger.info(f"Negocios de ejemplo eliminados: {res.deleted_count}")
+
+
 @app.on_event("startup")
 async def startup():
+    await remove_demo_businesses()
     await db.users.create_index("email", unique=True)
     await db.login_attempts.create_index("identifier")
     await seed_collection("radars", seed_data.SEED_RADARS)
