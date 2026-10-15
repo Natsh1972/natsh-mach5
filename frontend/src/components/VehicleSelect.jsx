@@ -16,11 +16,11 @@ export function VehicleSelect() {
   return (
     <section className="max-w-6xl mx-auto px-4 pt-4 pb-8" data-testid="vehicle-select">
       <img src="/marca-automotos.png" alt="AUTOMOTOS L.P." className="h-14 sm:h-20 w-auto mx-auto mb-4 select-none" draggable={false} data-testid="vehicle-select-brand" />
-      <h2 className="font-cond font-900 uppercase text-4xl sm:text-5xl text-white text-center tracking-wide">
+      <h2 className="font-cond font-900 uppercase       text-2xl sm:text-5xl text-white text-center tracking-wide">
         Toma tu posición de largada
       </h2>
-      <p className="text-white/50 text-center mt-2 text-base">
-        Elegí tu vehículo y encontrá el servicio exacto que buscás.
+            <p className="text-white/50 text-center mt-2 text-[11px] sm:text-base whitespace-nowrap">
+              Elegí tu vehículo y encontrá el servicio que buscás.
       </p>
 
       <div className="flex flex-wrap justify-center gap-5 mt-5">

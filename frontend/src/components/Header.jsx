@@ -50,7 +50,7 @@ export function Header() {
           onClick={() => openModal("sumaTaller")}
           className="inline-flex items-center gap-1.5 text-sm font-bold bg-[#FFD60A] text-[#0B0C10] rounded-full px-3 py-1.5 hover:brightness-95 transition"
         >
-          <PlusCircle size={16} /> <span className="hidden sm:inline">Suma tu taller</span>
+          <PlusCircle size={16} /> <span className="text-xs sm:text-sm whitespace-nowrap">Suma tu taller</span>
         </button>
       </div>
     </header>
