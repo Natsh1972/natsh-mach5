@@ -15,12 +15,12 @@ export function VehicleSelect() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 pt-4 pb-8" data-testid="vehicle-select">
-      <img src="/marca-automotos.png" alt="AUTOMOTOS L.P." className="h-14 sm:h-20 w-auto mx-auto mb-4 select-none" draggable={false} data-testid="vehicle-select-brand" />
-      <h2 className="font-cond font-900 uppercase       text-2xl sm:text-5xl text-white text-center tracking-wide">
+      <img src="/marca-automotos.png" alt="AUTOMOTOS L.P." className="h-14 sm:h-20 w-auto mx-auto mb-1 select-none" draggable={false} data-testid="vehicle-select-brand" />
+      <h2 className="font-cond font-900 uppercase text-2xl sm:text-5xl leading-[0.95] text-white text-center tracking-wide">
         Toma tu posición de largada
       </h2>
-            <p className="text-white/50 text-center mt-2 text-[11px] sm:text-base whitespace-nowrap">
-              Elegí tu vehículo y encontrá el servicio que buscás.
+      <p className="text-white/50 text-center mt-0.5 leading-tight text-[11px] sm:text-base whitespace-nowrap">
+        Elegí tu vehículo y encontrá el servicio que buscás.
       </p>
 
       <div className="flex flex-wrap justify-center gap-5 mt-5">
@@ -35,7 +35,7 @@ export function VehicleSelect() {
             className="w-24 h-24 sm:w-28 sm:h-28 object-contain shrink-0 group-hover:scale-105 transition-transform select-none pointer-events-none"
           />
           <div>
-            <h3 className="font-cond font-900 text-3xl uppercase text-white leading-none">Autos</h3>
+            <h3 className="font-cond font-900 text-3xl uppercase text-white leading-none"><span className="letra-pulso">A</span>utos</h3>
             <p className="text-white/60 text-[10px] mt-1.5 leading-snug">HACÉ CLICK para entrar en la GUIA de SERVICIOS e INFO. actual</p>
           </div>
         </button>
@@ -51,7 +51,7 @@ export function VehicleSelect() {
             className={`w-24 h-24 sm:w-28 sm:h-28 object-contain shrink-0 group-hover:scale-105 transition-transform select-none pointer-events-none ${motoIntro ? "moto-pass" : ""}`}
           />
           <div>
-            <h3 className="font-cond font-900 text-3xl uppercase text-white leading-none">Motos</h3>
+            <h3 className="font-cond font-900 text-3xl uppercase text-white leading-none"><span className="letra-pulso">M</span>otos</h3>
             <p className="text-white/60 text-[10px] mt-1.5 leading-snug">HACÉ CLICK para entrar en la GUIA de SERVICIOS e INFO. actual</p>
           </div>
         </button>

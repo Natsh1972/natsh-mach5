@@ -7,7 +7,7 @@ import { waLink, MACH5_WHATSAPP } from "@/lib/api";
 export function Footer() {
   const { openModal } = useApp();
   return (
-    <footer className="border-t border-[#1F2330] bg-[#0B0C10] mt-10">
+    <footer className="border-t border-[#1F2330] bg-[#0B0C10] mt-10 pb-28">
       <div className="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
         <div>
           <div className="inline-block">

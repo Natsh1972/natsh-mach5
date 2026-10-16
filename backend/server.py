@@ -107,11 +107,12 @@ def create_refresh_token(user_id: str) -> str:
 
 
 def _set_auth_cookies(response: Response, access: str, refresh: str):
-    # SameSite=Lax: front y API comparten dominio -> bloquea CSRF cross-site en POSTs admin sin romper el login.
+    # SameSite=None: el front (automotoslaplata.com) y la API (onrender.com) estan en dominios distintos.
+    # El anti-CSRF lo dan el header X-Requested-With y la lista CORS_ORIGINS.
     response.set_cookie("access_token", access, httponly=True, secure=True,
-                        samesite="lax", max_age=ACCESS_TOKEN_MINUTES * 60, path="/")
+                        samesite="none", max_age=ACCESS_TOKEN_MINUTES * 60, path="/")
     response.set_cookie("refresh_token", refresh, httponly=True, secure=True,
-                        samesite="lax", max_age=REFRESH_TOKEN_DAYS * 86400, path="/")
+                        samesite="none", max_age=REFRESH_TOKEN_DAYS * 86400, path="/")
 
 
 def _decode(token: str, expected_type: str) -> dict:
@@ -307,8 +308,8 @@ async def login(request: Request, response: Response, body: LoginInput):
 
 @api_router.post("/auth/logout")
 async def logout(response: Response, _: dict = Depends(get_current_user)):
-    response.delete_cookie("access_token", path="/")
-    response.delete_cookie("refresh_token", path="/")
+    response.delete_cookie("access_token", path="/", secure=True, samesite="none")
+    response.delete_cookie("refresh_token", path="/", secure=True, samesite="none")
     return {"ok": True}
 
 
