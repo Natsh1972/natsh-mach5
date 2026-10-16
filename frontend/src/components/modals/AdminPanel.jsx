@@ -5,7 +5,7 @@ import { api } from "@/lib/api";
 import { Modal } from "@/components/modals/Modal";
 import { LOGIN, LOGOUT } from "@/constants/testIds";
 
-const TABS = ["Pendientes", "Agenda", "Camaras", "Emergencias", "Sitios", "Desvios"];
+const TABS = ["Pendientes", "Importar", "Agenda", "Camaras", "Emergencias", "Sitios", "Desvios"];
 
 const inp = "w-full bg-[#0B0C10] border border-[#1F2330] rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#FFD60A]/60";
 
@@ -98,6 +98,7 @@ export function AdminPanel({ onClose }) {
       </div>
 
       {tab === "Pendientes" && <Pendientes subs={subs} refresh={refresh} />}
+      {tab === "Importar" && <ImportarOsm />}
       {tab === "Agenda" && <AgendaAdmin events={events} refresh={refresh} />}
       {tab === "Camaras" && <CrudAdmin coll="cameras" items={cameras} refresh={refresh}
         fields={[["address", "Interseccion"], ["direction", "Sentido"], ["type", "Tipo"], ["lat", "Lat"], ["lng", "Lng"]]}
@@ -112,6 +113,79 @@ export function AdminPanel({ onClose }) {
         fields={[["street", "Calle"], ["type", "Tipo"], ["description", "Descripcion"], ["lat", "Lat"], ["lng", "Lng"]]}
         empty={{ street: "", type: "corte", description: "", lat: -34.92, lng: -57.95 }} label={(i) => `${i.street} - ${i.type}`} />}
     </Modal>
+  );
+}
+
+const OSM_MAP = {
+  car_repair: { category: "mecanica", vehicles: ["auto"] },
+  car_parts: { category: "repuestos", vehicles: ["auto"] },
+  tyres: { category: "neumaticos", vehicles: ["auto", "moto"] },
+  car_wash: { category: "lavadero", vehicles: ["auto", "moto"] },
+  motorcycle_repair: { category: "mecanica", vehicles: ["moto"] },
+  motorcycle: { category: "repuestos", vehicles: ["moto"] },
+};
+
+function osmToItems(geo) {
+  const out = [];
+  for (const f of geo.features || []) {
+    const p = f.properties || {};
+    const g = f.geometry;
+    if (!p.name || !g || g.type !== "Point") continue;
+    const kind = p.shop || p.amenity || p.craft;
+    const m = OSM_MAP[kind];
+    if (!m) continue;
+    const isVtv = /\bvtv\b/i.test(p.name);
+    const street = [p["addr:street"], p["addr:housenumber"]].filter(Boolean).join(" ");
+    out.push({
+      osmId: String(f.id || p["@id"] || `${g.coordinates[1]},${g.coordinates[0]}`),
+      name: p.name.slice(0, 120),
+      category: isVtv ? "papeles_vtv" : m.category,
+      vehicles: m.vehicles,
+      zone: (p["addr:suburb"] || p["addr:city"] || "La Plata").slice(0, 80),
+      address: street.slice(0, 160),
+      phone: (p.phone || p["contact:phone"] || p["contact:whatsapp"] || "").slice(0, 40),
+      lat: g.coordinates[1],
+      lng: g.coordinates[0],
+    });
+  }
+  return out;
+}
+
+function ImportarOsm() {
+  const [items, setItems] = useState([]);
+  const [busy, setBusy] = useState(false);
+  const onFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setItems(osmToItems(JSON.parse(await file.text())));
+    } catch { toast.error("Ese archivo no se pudo leer"); }
+  };
+  const send = async () => {
+    setBusy(true);
+    try {
+      const r = await api.importOsm(items);
+      toast.success(`Cargados: ${r.nuevos}. Repetidos: ${r.repetidos}`);
+      setItems([]);
+    } catch { toast.error("No se pudo importar"); }
+    setBusy(false);
+  };
+  const conTel = items.filter((i) => i.phone).length;
+  return (
+    <div className="space-y-3" data-testid="admin-importar">
+      <p className="text-white/60 text-sm">
+        Elegí el archivo <b>export.geojson</b> de OpenStreetMap. Se cargan como <b>sin verificar</b>, con la leyenda de OpenStreetMap.
+      </p>
+      <input type="file" accept=".geojson,.json,application/json" onChange={onFile} className="text-sm text-white/70" />
+      {items.length > 0 && (
+        <div className="rounded-lg bg-[#0B0C10] border border-[#1F2330] p-3 text-sm text-white/80">
+          <p>Listos para cargar: <b>{items.length}</b> negocios ({conTel} con teléfono).</p>
+          <button onClick={send} disabled={busy} className="mt-3 bg-[#FFD60A] text-[#0B0C10] font-bold rounded-lg px-4 py-2 disabled:opacity-50">
+            {busy ? "Cargando..." : "Cargar ahora"}
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 

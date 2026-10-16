@@ -59,6 +59,7 @@ export const api = {
   // admin actions (autenticadas por cookie)
   getSubmissions: () => client.get("/admin/submissions").then((r) => r.data),
   approve: (id) => client.post(`/admin/submissions/${id}/approve`, {}).then((r) => r.data),
+  importOsm: (items) => client.post("/admin/import-osm", { items }).then((r) => r.data),
   rejectSubmission: (id) => client.delete(`/admin/submissions/${id}`).then((r) => r.data),
   addEvent: (data) => client.post("/admin/events", data).then((r) => r.data),
   delEvent: (id) => client.delete(`/admin/events/${id}`).then((r) => r.data),
