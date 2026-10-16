@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, CalendarDays, PlusCircle } from "lucide-react";
+import { Search, CalendarDays, PlusCircle, Code2 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import { LogoCompact } from "@/components/graphics";
 const SCREEN_LABEL = {
@@ -8,6 +8,7 @@ const SCREEN_LABEL = {
   list: "LISTA",
   detail: "DETALLE",
   search: "BÚSQUEDA",
+  builder: "CREADOR",
 };
 export function Header() {
   const { goHome, push, openModal, current } = useApp();
@@ -44,6 +45,14 @@ export function Header() {
           className="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-white/80 hover:text-[#FFD60A] transition-colors"
         >
           <CalendarDays size={16} /> Agenda
+        </button>
+        <button
+          aria-label="Abrir creador de sitios"
+          aria-current={current.screen === "builder" ? "page" : undefined}
+          onClick={() => push({ screen: "builder" })}
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-white/80 hover:text-[#FFD60A] transition-colors"
+        >
+          <Code2 size={16} /> <span className="hidden lg:inline">Crear mi sitio</span>
         </button>
         <button
           data-testid="header-suma-taller-btn"

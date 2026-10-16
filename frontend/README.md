@@ -1,5 +1,11 @@
 # Getting Started with Create React App
 
+## Visual website builder prototype
+
+Choose **Crear mi sitio** in the top navigation to open the beginner-friendly builder. Add text, buttons, or image placeholders, then edit or remove them in the right-hand pane. The preview and the readable HTML in the left-hand pane update as you type.
+
+The prototype is intentionally small: `WebsiteBuilder.jsx` owns the editable page state, while `websiteBuilderMarkup.js` turns that state into HTML. New element types can be added to both the editor and the markup generator.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
