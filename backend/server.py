@@ -302,8 +302,9 @@ async def login(request: Request, response: Response, body: LoginInput):
         raise HTTPException(status_code=401, detail="Credenciales invalidas")
     await db.login_attempts.delete_one({"identifier": identifier})
     uid = str(user["_id"])
-    _set_auth_cookies(response, create_access_token(uid, email), create_refresh_token(uid))
-    return {"id": uid, "email": email, "name": user.get("name", ""), "role": user.get("role", "admin")}
+    access = create_access_token(uid, email)
+    _set_auth_cookies(response, access, create_refresh_token(uid))
+    return {"id": uid, "email": email, "name": user.get("name", ""), "role": user.get("role", "admin"), "token": access}
 
 
 @api_router.post("/auth/logout")
