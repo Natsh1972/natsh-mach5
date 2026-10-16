@@ -28,6 +28,14 @@ const client = axios.create({
   headers: { "X-Requested-With": "XMLHttpRequest" },
 });
 
+// Las cookies entre dominios (Vercel -> Render) las bloquea el navegador: se guarda el token de la sesión y se envía por encabezado.
+const TOKEN_KEY = "automotos_admin_token";
+client.interceptors.request.use((cfg) => {
+  const t = sessionStorage.getItem(TOKEN_KEY);
+  if (t) cfg.headers.Authorization = `Bearer ${t}`;
+  return cfg;
+});
+
 // Sin backend, el hosting devuelve HTML en vez de JSON: se trata como error para no romper la pagina.
 client.interceptors.response.use((res) => {
   if (typeof res.data === "string" && /^\s*</.test(res.data)) {
@@ -53,8 +61,11 @@ export const api = {
   getSites: () => client.get("/sites").then((r) => r.data),
   getDesvios: () => client.get("/desvios").then((r) => r.data),
   // admin auth (JWT en cookie httpOnly)
-  login: (email, password) => client.post("/auth/login", { email, password }).then((r) => r.data),
-  logout: () => client.post("/auth/logout").then((r) => r.data),
+  login: (email, password) => client.post("/auth/login", { email, password }).then((r) => {
+    if (r.data?.token) sessionStorage.setItem(TOKEN_KEY, r.data.token);
+    return r.data;
+  }),
+  logout: () => client.post("/auth/logout").then((r) => r.data).finally(() => sessionStorage.removeItem(TOKEN_KEY)),
   me: () => client.get("/auth/me").then((r) => r.data),
   // admin actions (autenticadas por cookie)
   getSubmissions: () => client.get("/admin/submissions").then((r) => r.data),
