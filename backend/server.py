@@ -508,6 +508,50 @@ async def force_verify(bid: str, _: dict = Depends(get_current_admin)):
     return {"ok": True}
 
 
+class ImportItem(BaseModel):
+    osmId: str = Field(min_length=1, max_length=40)
+    name: str = Field(min_length=2, max_length=120)
+    category: str = Field(min_length=1, max_length=50)
+    vehicles: List[str] = Field(default_factory=list, max_length=5)
+    zone: str = Field(default="La Plata", max_length=80)
+    address: str = Field(default="", max_length=160)
+    phone: str = Field(default="", max_length=40)
+    lat: float
+    lng: float
+
+    @field_validator("vehicles")
+    @classmethod
+    def _veh(cls, v):
+        v = [x for x in v if x in VEHICLE_SET]
+        if not v:
+            raise ValueError("vehicles debe incluir 'auto' y/o 'moto'")
+        return v
+
+
+class ImportBatch(BaseModel):
+    items: List[ImportItem] = Field(max_length=1000)
+
+
+@api_router.post("/admin/import-osm")
+async def import_osm(batch: ImportBatch, _: dict = Depends(get_current_admin)):
+    """Carga negocios de OpenStreetMap como 'sin verificar'. No duplica por osmId."""
+    nuevos, repetidos = 0, 0
+    for it in batch.items:
+        if await db.businesses.find_one({"source": "osm", "osmId": it.osmId}):
+            repetidos += 1
+            continue
+        await db.businesses.insert_one({
+            "id": new_id(), "name": it.name, "category": it.category, "vehicles": it.vehicles,
+            "zone": it.zone, "whatsapp": "", "phone": it.phone, "address": it.address,
+            "lat": it.lat, "lng": it.lng,
+            "description": "", "services": [], "highlighted": False, "rating": 0.0,
+            "reviewsCount": 0, "photos": [], "status": "approved", "source": "osm",
+            "osmId": it.osmId, "createdAt": now_iso(),
+        })
+        nuevos += 1
+    return {"ok": True, "nuevos": nuevos, "repetidos": repetidos}
+
+
 @api_router.post("/admin/events")
 async def add_event(e: EventCreate, _: dict = Depends(get_current_admin)):
     doc = e.model_dump()

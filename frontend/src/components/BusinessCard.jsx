@@ -72,15 +72,29 @@ export function BusinessCard({ business, distanceKm }) {
 
         {business.verified && <div className="mt-2"><VerificadoBadge /></div>}
 
-        <a
-          data-testid={`business-whatsapp-${business.id}`}
-          href={waLink(business.whatsapp, `Hola ${business.name}, te contacto desde AUTOMOTOS L.P.`)}
-          target="_blank" rel="noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className="mt-3 flex items-center justify-center gap-2 w-full bg-[#25D366] text-[#0B0C10] font-bold text-sm rounded-lg py-2 hover:brightness-95 transition"
-        >
-          <MessageCircle size={16} /> WhatsApp
-        </a>
+        {business.source === "osm" && (
+          <p className="mt-2 text-[11px] text-white/45">Sin verificar · Datos © OpenStreetMap</p>
+        )}
+
+        {business.whatsapp ? (
+          <a
+            data-testid={`business-whatsapp-${business.id}`}
+            href={waLink(business.whatsapp, `Hola ${business.name}, te contacto desde AUTOMOTOS L.P.`)}
+            target="_blank" rel="noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="mt-3 flex items-center justify-center gap-2 w-full bg-[#25D366] text-[#0B0C10] font-bold text-sm rounded-lg py-2 hover:brightness-95 transition"
+          >
+            <MessageCircle size={16} /> WhatsApp
+          </a>
+        ) : business.phone ? (
+          <a
+            href={`tel:${business.phone}`}
+            onClick={(e) => e.stopPropagation()}
+            className="mt-3 flex items-center justify-center gap-2 w-full border border-[#1F2330] text-white font-bold text-sm rounded-lg py-2 hover:bg-white/5 transition"
+          >
+            Llamar {business.phone}
+          </a>
+        ) : null}
       </div>
     </article>
   );

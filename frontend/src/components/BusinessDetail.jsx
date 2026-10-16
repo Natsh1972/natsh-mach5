@@ -75,14 +75,25 @@ export function BusinessDetail({ id }) {
             </div>
           )}
 
-          <a
-            data-testid="detail-whatsapp"
-            href={waLink(b.whatsapp, `Hola ${b.name}, te contacto desde AUTOMOTOS L.P.`)}
-            target="_blank" rel="noreferrer"
-            className="mt-5 inline-flex items-center gap-2 bg-[#25D366] text-[#0B0C10] font-bold rounded-lg px-5 py-2.5 hover:brightness-95 transition"
-          >
-            <MessageCircle size={18} /> Contactar por WhatsApp
-          </a>
+          {b.address && <p className="text-white/60 text-sm mt-3">📍 {b.address}</p>}
+          {b.source === "osm" && (
+            <p className="text-white/45 text-xs mt-3">Sin verificar · Datos © OpenStreetMap contributors. Confirmá horarios y datos antes de ir.</p>
+          )}
+
+          {b.whatsapp ? (
+            <a
+              data-testid="detail-whatsapp"
+              href={waLink(b.whatsapp, `Hola ${b.name}, te contacto desde AUTOMOTOS L.P.`)}
+              target="_blank" rel="noreferrer"
+              className="mt-5 inline-flex items-center gap-2 bg-[#25D366] text-[#0B0C10] font-bold rounded-lg px-5 py-2.5 hover:brightness-95 transition"
+            >
+              <MessageCircle size={18} /> Contactar por WhatsApp
+            </a>
+          ) : b.phone ? (
+            <a href={`tel:${b.phone}`} className="mt-5 inline-flex items-center gap-2 border border-[#1F2330] text-white font-bold rounded-lg px-5 py-2.5 hover:bg-white/5 transition">
+              Llamar {b.phone}
+            </a>
+          ) : null}
         </div>
       </div>
 
