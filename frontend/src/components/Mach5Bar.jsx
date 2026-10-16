@@ -14,7 +14,8 @@ export function Mach5Bar() {
   const [collapsed, setCollapsed] = useState(false);
   return (
     <div
-      className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-2xl rounded-t-2xl border-t border-x border-white/15 bg-[#0B0C10]/95 backdrop-blur-md shadow-xl shadow-black/60"
+      className="fixed left-1/2 -translate-x-1/2 z-50 w-full max-w-2xl rounded-t-2xl border-t border-x border-white/15 bg-[#0B0C10]/95 backdrop-blur-md shadow-xl shadow-black/60"
+      style={{ bottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
       data-testid="mach5-bar"
     >
       <button

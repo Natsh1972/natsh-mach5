@@ -51,6 +51,12 @@ body {
   animation: hood-shine 6s linear infinite;
 }
 
+@keyframes letra-pulso {
+  0%, 100% { color: #ffffff; }
+  50% { color: #FFD60A; }
+}
+.letra-pulso { animation: letra-pulso 1.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .letra-pulso { animation: none; } }
 @keyframes moto-pass {
   0% { transform: translateX(-40px); opacity: 0; }
   20% { opacity: 1; }

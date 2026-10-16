@@ -19,7 +19,7 @@ export function LogoCompact({ className = "" }) {
     <img
       src="/marca-automotos.png"
       alt="AUTO MOTOS L.P."
-      className={`h-9 w-auto block select-none ${className}`}
+      className={`h-7 w-auto block select-none ${className}`}
       data-testid="logo-compact"
       draggable={false}
     />
