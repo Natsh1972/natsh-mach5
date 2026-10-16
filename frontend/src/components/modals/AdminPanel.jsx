@@ -192,11 +192,19 @@ function ImportarOsm() {
   };
   const send = async () => {
     setBusy(true);
+    let nuevos = 0, repetidos = 0;
     try {
-      const r = await api.importOsm(items);
-      toast.success(`Cargados: ${r.nuevos}. Repetidos: ${r.repetidos}`);
+      for (let i = 0; i < items.length; i += 40) {
+        const r = await api.importOsm(items.slice(i, i + 40));
+        nuevos += r.nuevos; repetidos += r.repetidos;
+      }
+      toast.success(`Cargados: ${nuevos}. Repetidos: ${repetidos}`);
       setItems([]);
-    } catch { toast.error("No se pudo importar"); }
+    } catch (e) {
+      const st = e?.response?.status || "sin conexión";
+      const det = e?.response?.data?.detail;
+      toast.error(`No se pudo importar (error ${st}). Cargados hasta ahora: ${nuevos}. ${typeof det === "string" ? det : ""}`);
+    }
     setBusy(false);
   };
   const conTel = items.filter((i) => i.phone).length;
