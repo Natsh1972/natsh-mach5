@@ -125,21 +125,46 @@ const OSM_MAP = {
   motorcycle: { category: "repuestos", vehicles: ["moto"] },
 };
 
+const plano = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const NO_NEGOCIO = /teatro|escuela|universidad|colegio|ferroviari|zapat|costura|cultural/;
+
+// Afina la categoría según el nombre y las etiquetas, sin inventar nada.
+function refinar(p, m) {
+  const n = plano(p.name);
+  let category = m.category;
+  let vehicles = m.vehicles;
+  if (/\bgnc\b/.test(n)) category = "gnc";
+  else if (/gomer|neumat|llanta|revulc|runflat/.test(n)) category = "neumaticos";
+  else if (/lubric/.test(n)) category = "lubricentros";
+  else if (/tapicer/.test(n)) category = "tapiceria";
+  else if (/sacabollo|chapa/.test(n)) category = "chapa_soldadura";
+  else if (/pintura/.test(n)) category = "pintura";
+  else if (/electromec|encendido/.test(n)) category = "electrica";
+  else if (/repuesto|autopartes/.test(n)) category = "repuestos";
+  else if (/\bvtv\b|grabado/.test(n)) category = "papeles_vtv";
+  if (/moto/.test(n) && !/automot/.test(n)) vehicles = ["moto"];
+  return { category, vehicles };
+}
+
 function osmToItems(geo) {
   const out = [];
+  const vistos = new Set();
   for (const f of geo.features || []) {
     const p = f.properties || {};
     const g = f.geometry;
     if (!p.name || !g || g.type !== "Point") continue;
-    const kind = p.shop || p.amenity || p.craft;
-    const m = OSM_MAP[kind];
-    if (!m) continue;
-    const isVtv = /\bvtv\b/i.test(p.name);
+    if (/^\d+$/.test(p.name.trim()) || NO_NEGOCIO.test(plano(p.name))) continue;
+    const base = OSM_MAP[p.shop || p.amenity || p.craft];
+    if (!base) continue;
+    const m = refinar(p, base);
+    const osmKey = String(f.id || p["@id"] || `${g.coordinates[1]},${g.coordinates[0]}`);
+    if (vistos.has(osmKey)) continue;
+    vistos.add(osmKey);
     const street = [p["addr:street"], p["addr:housenumber"]].filter(Boolean).join(" ");
     out.push({
       osmId: String(f.id || p["@id"] || `${g.coordinates[1]},${g.coordinates[0]}`),
       name: p.name.slice(0, 120),
-      category: isVtv ? "papeles_vtv" : m.category,
+      category: m.category,
       vehicles: m.vehicles,
       zone: (p["addr:suburb"] || p["addr:city"] || "La Plata").slice(0, 80),
       address: street.slice(0, 160),
@@ -155,10 +180,14 @@ function ImportarOsm() {
   const [items, setItems] = useState([]);
   const [busy, setBusy] = useState(false);
   const onFile = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
     try {
-      setItems(osmToItems(JSON.parse(await file.text())));
+      const todos = new Map();
+      for (const file of files) {
+        for (const it of osmToItems(JSON.parse(await file.text()))) todos.set(it.osmId, it);
+      }
+      setItems(Array.from(todos.values()));
     } catch { toast.error("Ese archivo no se pudo leer"); }
   };
   const send = async () => {
@@ -174,9 +203,9 @@ function ImportarOsm() {
   return (
     <div className="space-y-3" data-testid="admin-importar">
       <p className="text-white/60 text-sm">
-        Elegí el archivo <b>export.geojson</b> de OpenStreetMap. Se cargan como <b>sin verificar</b>, con la leyenda de OpenStreetMap.
+        Elegí uno o varios archivos <b>.geojson</b> de OpenStreetMap (podés seleccionar los 3 juntos con Ctrl). Se cargan como <b>sin verificar</b>, con la leyenda de OpenStreetMap.
       </p>
-      <input type="file" accept=".geojson,.json,application/json" onChange={onFile} className="text-sm text-white/70" />
+      <input type="file" multiple accept=".geojson,.json,application/json" onChange={onFile} className="text-sm text-white/70" />
       {items.length > 0 && (
         <div className="rounded-lg bg-[#0B0C10] border border-[#1F2330] p-3 text-sm text-white/80">
           <p>Listos para cargar: <b>{items.length}</b> negocios ({conTel} con teléfono).</p>
